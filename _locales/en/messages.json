@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "VTS",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Alt+Q to open vertical tab list with thumbnail preview and side macro, quickly switch browser tabs",
+    "description": "Extension description"
+  }
+}
