@@ -7,8 +7,6 @@
 - **Redesigned** settings popup: removed language toggle, replaced text with eye emoticons (`O_O`/`>_<`), removed box borders with divider lines ([popup.html](./popup.html), [popup.js](./popup.js))
 - **Refreshed** brand colors: more saturated blue/green for selection and active states ([overlay.css](./overlay.css#L6-L11))
 - **Increased** tab item heights: default 40→60px, expanded 120→150px ([popup.html](./popup.html#L50-L67))
-- **Fixed** background image path (`.jpg`→`.png`) and `inset: -1px` to hide border line under thumbnails ([popup.html](./popup.html#L28-L37))
-
 ## v1.1.2 (2026-04-30)
 
 - **Fixed** preview layout jitter when switching between tabs with different thumbnail sizes.
