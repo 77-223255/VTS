@@ -1,5 +1,5 @@
 /**
- * background.js - Service Worker v1.1.2
+ * background.js - Service Worker v1.2.0
  * Handles tab capture, caching, message routing
  */
 

@@ -32,6 +32,7 @@
 
 | Key | Action |
 | --- | ------ |
+| `Alt+W` | Open settings popup |
 | `Alt+Q` | Open switcher / navigate down |
 | `Alt+Shift+Q` | Navigate up |
 | `↑` / `↓` | Navigate tabs |
@@ -64,6 +65,8 @@ A: Yes, enable "Allow in incognito" in extension details.
 **Q: Why doesn't the shortcut work sometimes?**  
 A: Some shortcuts may be intercepted when focus is on browser input fields. Recommended to use default shortcuts, or try different combinations.
 
+[Changelog](./CHANGELOG.md)
+
 ## License
 
-MIT License - see [LICENSE](./LICENSE).
+MIT License - see [LICENSE](../LICENSE).

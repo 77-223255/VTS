@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "author": "77-223255",
   "homepage_url": "https://github.com/77-223255/VTS",
   "minimum_chrome_version": "102",
@@ -15,6 +15,10 @@
     "default_popup": "popup.html"
   },
   "commands": {
+    "_execute_action": {
+      "suggested_key": { "default": "Alt+W", "mac": "Alt+W" },
+      "description": "Open settings popup"
+    },
     "open-overlay": {
       "suggested_key": { "default": "Alt+Q", "mac": "Alt+Q" },
       "description": "Open tab switcher"

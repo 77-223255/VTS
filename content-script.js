@@ -1,5 +1,5 @@
 /**
- * content-script.js - Vertical Tab Switcher v1.1.2
+ * content-script.js - Vertical Tab Switcher v1.2.0
  * Overlay UI with keyboard/mouse navigation and preview
  */
 
@@ -160,11 +160,34 @@
   }
 
   function showPreview(tab) {
-    if (!S.settings.preview || !tab?.thumbnail) {
+    if (!S.settings.preview) {
       DOM.preview?.classList.remove('vts-visible');
       return;
     }
     const img = DOM.preview.querySelector('img');
+    DOM.preview.querySelector('.vts-preview-title').textContent = tab?.title || '';
+    if (!tab?.thumbnail) {
+      DOM.preview.classList.remove('vts-visible');
+      DOM.preview.classList.add('vts-no-thumb');
+      img.style.display = 'none';
+      const edge = Math.max(32, innerWidth * 0.03);
+      const gap = 32;
+      const listW = 280;
+      const titleH = 28;
+      const availW = innerWidth - edge * 2 - listW - gap;
+      const availH = innerHeight - edge * 2 - titleH;
+      let w = Math.min(availW, availH * 1.6);
+      let h = w / 1.6;
+      if (h > availH) { h = availH; w = h * 1.6; }
+      const listRect = DOM.list.getBoundingClientRect();
+      const previewX = listRect.right + gap;
+      const previewY = (innerHeight - h - titleH) / 2;
+      Object.assign(DOM.preview.style, { width: w + 'px', height: h + titleH + 'px', left: previewX + 'px', top: previewY + 'px' });
+      DOM.preview.classList.add('vts-visible');
+      return;
+    }
+    DOM.preview.classList.remove('vts-no-thumb');
+    img.style.display = '';
     DOM.preview.querySelector('.vts-preview-title').textContent = tab.title;
     img.onload = () => {
       const edge = Math.max(32, innerWidth * 0.03);
