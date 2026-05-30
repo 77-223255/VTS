@@ -1,5 +1,5 @@
 /**
- * content-script.js - Vertical Tab Switcher v1.2.0
+ * content-script.js - Vertical Tab Switcher v1.3.0
  * Overlay UI with keyboard/mouse navigation and preview
  */
 
@@ -23,6 +23,20 @@
       img.onerror = () => resolve({ w: 0, h: 0 });
       img.src = dataUrl;
     });
+  }
+
+  function calcPreviewLayout(ratio) {
+    const edge = Math.max(32, innerWidth * 0.03);
+    const gap = 32;
+    const listW = 280;
+    const titleH = 28;
+    const availW = innerWidth - edge * 2 - listW - gap;
+    const availH = innerHeight - edge * 2 - titleH;
+    let w = Math.min(availW, availH * ratio);
+    let h = w / ratio;
+    if (h > availH) { h = availH; w = h * ratio; }
+    const listRect = DOM.list.getBoundingClientRect();
+    return { w, h, titleH, previewX: listRect.right + gap, previewY: (innerHeight - h - titleH) / 2 };
   }
 
   const DOM = {
@@ -134,25 +148,13 @@
   function positionList(previewSize = null) {
     if (!DOM.list) return;
     if (S.settings.preview && previewSize?.w > 0) {
-      const edge = Math.max(32, innerWidth * 0.03);
-      const gap = 32;
-      const listW = 280;
-      const titleH = 28;
-      const availW = innerWidth - edge * 2 - listW - gap;
-      const availH = innerHeight - edge * 2 - titleH;
-      const ratio = previewSize.w / previewSize.h;
-      let w = Math.min(availW, availH * ratio);
-      let h = w / ratio;
-      if (h > availH) { h = availH; w = h * ratio; }
-      const totalW = listW + gap + w;
+      const p = calcPreviewLayout(previewSize.w / previewSize.h);
+      const totalW = 280 + 32 + p.w;
       const listX = (innerWidth - totalW) / 2;
       DOM.list.style.cssText = `position:absolute;left:${listX}px;top:50%;transform:translateY(-50%)`;
     } else if (S.settings.preview) {
-      const edge = Math.max(32, innerWidth * 0.03);
-      const gap = 32;
-      const listW = 280;
       const previewW = Math.min(innerWidth * 0.35, innerHeight * 0.6);
-      const listX = (innerWidth - listW - gap - previewW) / 2;
+      const listX = (innerWidth - 280 - 32 - previewW) / 2;
       DOM.list.style.cssText = `position:absolute;left:${listX}px;top:50%;transform:translateY(-50%)`;
     } else {
       DOM.list.style.cssText = '';
@@ -170,19 +172,8 @@
       DOM.preview.classList.remove('vts-visible');
       DOM.preview.classList.add('vts-no-thumb');
       img.style.display = 'none';
-      const edge = Math.max(32, innerWidth * 0.03);
-      const gap = 32;
-      const listW = 280;
-      const titleH = 28;
-      const availW = innerWidth - edge * 2 - listW - gap;
-      const availH = innerHeight - edge * 2 - titleH;
-      let w = Math.min(availW, availH * 1.6);
-      let h = w / 1.6;
-      if (h > availH) { h = availH; w = h * 1.6; }
-      const listRect = DOM.list.getBoundingClientRect();
-      const previewX = listRect.right + gap;
-      const previewY = (innerHeight - h - titleH) / 2;
-      Object.assign(DOM.preview.style, { width: w + 'px', height: h + titleH + 'px', left: previewX + 'px', top: previewY + 'px' });
+      const p = calcPreviewLayout(1.6);
+      Object.assign(DOM.preview.style, { width: p.w + 'px', height: p.h + p.titleH + 'px', left: p.previewX + 'px', top: p.previewY + 'px' });
       DOM.preview.classList.add('vts-visible');
       return;
     }
@@ -190,20 +181,8 @@
     img.style.display = '';
     DOM.preview.querySelector('.vts-preview-title').textContent = tab.title;
     img.onload = () => {
-      const edge = Math.max(32, innerWidth * 0.03);
-      const gap = 32;
-      const listW = 280;
-      const titleH = 28;
-      const availW = innerWidth - edge * 2 - listW - gap;
-      const availH = innerHeight - edge * 2 - titleH;
-      const ratio = img.naturalWidth / img.naturalHeight;
-      let w = Math.min(availW, availH * ratio);
-      let h = w / ratio;
-      if (h > availH) { h = availH; w = h * ratio; }
-      const listRect = DOM.list.getBoundingClientRect();
-      const previewX = listRect.right + gap;
-      const previewY = (innerHeight - h - titleH) / 2;
-      Object.assign(DOM.preview.style, { width: w + 'px', height: h + titleH + 'px', left: previewX + 'px', top: previewY + 'px' });
+      const p = calcPreviewLayout(img.naturalWidth / img.naturalHeight);
+      Object.assign(DOM.preview.style, { width: p.w + 'px', height: p.h + p.titleH + 'px', left: p.previewX + 'px', top: p.previewY + 'px' });
       DOM.preview.classList.add('vts-visible');
     };
     img.src = tab.thumbnail;

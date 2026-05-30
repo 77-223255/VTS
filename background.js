@@ -1,5 +1,5 @@
 /**
- * background.js - Service Worker v1.2.0
+ * background.js - Service Worker v1.3.0
  * Handles tab capture, caching, message routing
  */
 
@@ -47,6 +47,10 @@ const cache = {
   del(id) {
     this.size -= this.sizeOf(this.data.get(id));
     this.data.delete(id);
+    this.capturing.delete(id);
+    this.timers.delete(id);
+    chrome.alarms.clear(`c_${id}`).catch(() => {});
+    this.save();
   }
 };
 
@@ -65,11 +69,17 @@ async function capture(tabId, windowId) {
 
 const router = {
   async getTabsAndCapture({ tab }) {
-    const wid = tab?.windowId;
-    if (!wid) return { tabs: [] };
+    let wid = tab?.windowId;
+    let captureId = tab?.id;
+    if (!wid) {
+      const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      if (!activeTab) return { tabs: [] };
+      wid = activeTab.windowId;
+      captureId = activeTab.id;
+    }
     const [tabs] = await Promise.all([
       chrome.tabs.query({ windowId: wid }),
-      tab?.id ? capture(tab.id, wid) : null
+      captureId ? capture(captureId, wid) : null
     ]);
     return {
       tabs: tabs.map(t => ({
@@ -87,10 +97,7 @@ const router = {
   async closeTab({ tabId }) {
     try {
       await chrome.tabs.remove(tabId);
-      cache.del(tabId), cache.capturing.delete(tabId);
-      chrome.alarms.clear(`c_${tabId}`).catch(() => {});
-      cache.timers.delete(tabId);
-      cache.save();
+      cache.del(tabId);
       return { ok: true };
     } catch (e) { return { ok: false, error: e.message }; }
   }
@@ -122,9 +129,7 @@ chrome.tabs.onUpdated.addListener(async (id, { status }, t) => {
 });
 
 chrome.tabs.onRemoved.addListener(id => {
-  cache.del(id), cache.capturing.delete(id), cache.timers.delete(id);
-  chrome.alarms.clear(`c_${id}`).catch(() => {});
-  cache.save();
+  cache.del(id);
 });
 
 chrome.commands.onCommand.addListener(cmd => {

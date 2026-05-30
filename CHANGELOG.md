@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.3.0 (2026-05-30)
+
+- **Redesigned** settings popup: replaced old toggle blocks with two minimalist synth-style LED indicators on a compact 84x36 panel ([popup.html](./popup.html), [popup.js](./popup.js))
+- **Refined** overlay brand colors: soft blue `#60a5fa` / green `#4ade80` with multi-layer diffused glow replacing the hard border ring ([overlay.css](./overlay.css#L6-L14))
+- **Gentle** selection/active/hover states: layered box-shadow (`0 0 8px` + `0 0 20px`) fading radially for a subtle luminous aura ([overlay.css](./overlay.css#L84-L86))
+- **Extended** `getTabsAndCapture` to work from popup context (no `sender.tab` fallback) ([background.js](./background.js#L71-L83))
+
 ## v1.2.0 (2026-05-17)
 
 - **Added** `_execute_action` command with `Alt+W` shortcut for settings popup ([manifest.json](./manifest.json#L17-L21))

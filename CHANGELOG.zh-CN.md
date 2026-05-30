@@ -1,5 +1,12 @@
 # 更新日志
 
+## v1.3.0 (2026-05-30)
+
+- **重设计** 设置弹窗：将原有文字开关替换为两个极简合成器风格 LED 指示灯，面板缩小至 84×36 像素 ([popup.html](./popup.html), [popup.js](./popup.js))
+- **精炼** overlay 品牌色：柔和蓝 `#60a5fa` / 绿 `#4ade80`，多层扩散辉光取代原先的硬边色圈 ([overlay.css](./overlay.css#L6-L14))
+- **柔化** 选中/活跃/悬停状态：层叠 box-shadow（`0 0 8px` + `0 0 20px`）径向衰减，营造柔和光晕 ([overlay.css](./overlay.css#L84-L86))
+- **扩展** `getTabsAndCapture`：支持无 `sender.tab` 的 popup 调用回退 ([background.js](./background.js#L71-L83))
+
 ## v1.2.0 (2026-05-17)
 
 - **新增** `_execute_action` 命令，绑定 `Alt+W` 快捷键打开设置面板 ([manifest.json](./manifest.json#L17-L21))

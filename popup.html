@@ -1,109 +1,73 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>VTS</title>
   <style>
-    /* popup styles v1.2.0 */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      width: 200px;
-      background: rgba(10, 10, 10, 0.85);   
-      font: 13px/1.4 "PingFang SC", "Microsoft YaHei", 
-"Noto Sans SC", -apple-system, BlinkMacSystemFont, 
-'Segoe UI', Roboto, sans-serif;
-      color: #fff;
+      width: 84px;
+      height: 36px;
+      background: #0d0d0d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    
-    .option {
-      width: 100%;
+
+    .leds {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .led-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
       cursor: pointer;
-      position: relative;
-      user-select: none;
-      overflow: hidden;
-      text-align: center;
-      border-bottom: 0.5px solid rgba(255, 255, 255, 0.12);
+      transition: background 0.3s, box-shadow 0.3s, transform 0.12s;
+      background: #222;
+      box-shadow: inset 0 2px 3px rgba(0,0,0,0.7),
+                  inset 0 -1px 1px rgba(255,255,255,0.03),
+                  0 1px 1px rgba(0,0,0,0.4);
     }
-    
-    .option-img {
-      position: absolute;
-      inset: -1px;
-      background-image: url('images/demo.jpg');
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 1;
+    .led-dot:hover {
+      background: #2a2a2a;
+      box-shadow: inset 0 2px 3px rgba(0,0,0,0.7),
+                  inset 0 -1px 1px rgba(255,255,255,0.05),
+                  0 1px 2px rgba(0,0,0,0.4);
     }
-    
-    .option-text {
-      position: absolute;
-      left: 0;
-      right: 0;
-      z-index: 10;
-      font-size: 22px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 3px;
+    .led-dot:active { transform: scale(0.85); }
+
+    #ledThumb.on {
+      background: radial-gradient(circle at 40% 35%, #fff 0%, #93c5fd 40%, #60a5fa 70%);
+      box-shadow: 0 0 10px 3px rgba(96,165,250,0.28),
+                  inset 0 0 3px rgba(255,255,255,0.2),
+                  0 2px 3px rgba(0,0,0,0.3);
     }
-    
-    #optThumb {
-      height: 60px;
+    #ledMacro.on {
+      background: radial-gradient(circle at 40% 35%, #fff 0%, #86efac 40%, #4ade80 70%);
+      box-shadow: 0 0 10px 3px rgba(74,222,128,0.22),
+                  inset 0 0 3px rgba(255,255,255,0.2),
+                  0 2px 3px rgba(0,0,0,0.3);
     }
-    #optThumb .option-text {
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    #optThumb.on .option-img { opacity: 1; }
-    #optThumb.on .option-text { color: #f0e8e0; }
-    #optThumb:not(.on) .option-text { color: #666; }
-    
-    #optPreview {
-      height: 60px;
-      transition: height 0.3s ease;
-    }
-    #optPreview.on {
-      height: 150px;
-    }
-    #optPreview .option-text {
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    #optPreview.on .option-img { opacity: 1; }
-    #optPreview:not(.on) .option-text { color: #666; }
-    #optPreview.on .option-text { color: #f0e8e0; }
-    
-    .unsupported-view { display: none; position: fixed; inset: 0;
-z-index: 100; background: rgba(0,0,0,0.5);
-backdrop-filter: blur(8px); 
--webkit-backdrop-filter: blur(8px); 
-flex-direction: column; align-items: center; 
-    justify-content: center; font-size: 48px; color: rgba(255,255,255,0.6); }
-    body.unsupported .unsupported-view { display: flex; }
-    body.unsupported .settings-view { opacity: 0.5; pointer-events: none; }
-    
+
     @media (prefers-color-scheme: light) {
-      body { background: rgba(245, 245, 245, 0.7);
-color: #1a1a1a; }
-      .option { border-bottom: 0.5px solid rgba(0, 0, 0, 0.1); }
-      #optThumb:not(.on) .option-text { color: #999; }
-      #optPreview:not(.on) .option-text { color: #999; }
-      .unsupported-view { background: rgba(255,255,255,0.5); color: rgba(0,0,0,0.4); }
+      body { background: #eee; }
+      .led-dot {
+        background: #d0d0d0;
+        box-shadow: inset 0 2px 3px rgba(0,0,0,0.12),
+                    inset 0 -1px 1px rgba(255,255,255,0.3),
+                    0 1px 1px rgba(0,0,0,0.1);
+      }
+      .led-dot:hover { background: #c8c8c8; }
     }
   </style>
 </head>
 <body>
-  <div class="settings-view">
-  <div class="option" id="optThumb">
-    <div class="option-img"></div>
-    <div class="option-text">O_O</div>
+  <div class="leds">
+    <div class="led-dot" id="ledThumb"></div>
+    <div class="led-dot" id="ledMacro"></div>
   </div>
-  <div class="option" id="optPreview">
-    <div class="option-img"></div>
-    <div class="option-text">O_O</div>
-  </div>
-  </div>
-  <div class="unsupported-view">x_x</div>
   <script src="popup.js"></script>
 </body>
 </html>
