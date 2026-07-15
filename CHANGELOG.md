@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.0 (2026-07-15)
+
+- **Popup tab switcher**: popup now renders the full tab list (280px, elastic height ≤420px) as a fallback when overlay injection is blocked ([popup.html](./popup.html), [popup.js](./popup.js))
+- **Overlay toggle**: third LED (white) enables/disables the Alt+Q overlay globally via a storage gate in the background service worker ([background.js](./background.js#L167-L170), [popup.js](./popup.js))
+- **Keyboard expansion**: `q`↑ `w`↓ `e`↵ in popup; `j`/`k` navigation in overlay; `1`/`2`/`3` toggle LEDs via keydown map ([popup.js](./popup.js), [content-script.js](./content-script.js))
+- **LED redesign**: solid color base with dual-layer box-shadow glow ring + inner shadow for a uniform 3-D indicator, no specular hotspot ([popup.html](./popup.html))
+- **CSS variables unified**: popup inline styles now share the same `rgba()` color tokens as overlay.css via `:root` custom properties ([popup.html](./popup.html))
+- **Performance**: DOM query results cached in `updateSel()` and `showPreview()` hot paths; `transition: all` narrowed to only animated properties; `CAPTURE_OPTS` constant hoisted ([content-script.js](./content-script.js), [overlay.css](./overlay.css), [background.js](./background.js))
+- **Source restructuring**: all JS files organized into numbered sections with ASCII dividers; dead code removed; variable names clarified
+
 ## v1.3.0 (2026-05-30)
 
 - **Redesigned** settings popup: replaced old toggle blocks with two minimalist synth-style LED indicators on a compact 84x36 panel ([popup.html](./popup.html), [popup.js](./popup.js))
