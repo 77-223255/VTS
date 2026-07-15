@@ -4,7 +4,7 @@
     "description": "Extension name"
   },
   "extDescription": {
-    "message": "Alt+Q to open vertical tab list with thumbnail preview and side macro, quickly switch browser tabs",
+    "message": "Alt+Q overlay or Alt+W popup — vertical tab switcher with thumbnails, side preview, and LED indicator controls",
     "description": "Extension description"
   }
 }
