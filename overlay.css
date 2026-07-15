@@ -1,5 +1,5 @@
 /**
- * overlay.css - Vertical Tab Switcher styles v1.3.0
+ * overlay.css - Vertical Tab Switcher styles v1.4.0
  */
 
 :root {
@@ -76,7 +76,7 @@
   border: 2px solid transparent;
   box-shadow: 0 4px 12px rgba(0,0,0,0.35);
   cursor: pointer;
-  transition: all 0.12s ease;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -153,8 +153,6 @@
 .vts-tab-favicon { 
   width: 16px !important; 
   height: 16px !important; 
-  max-width: 16px; 
-  max-height: 16px; 
   border-radius: 2px; 
   opacity: 0.85; 
   flex-shrink: 0; 
