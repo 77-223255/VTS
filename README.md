@@ -51,8 +51,8 @@
 | Key | Action |
 | --- | ------ |
 | `q` / `↑` | Navigate up |
-| `w` / `↓` | Navigate down |
-| `e` / `Enter` | Switch to selected tab |
+| `e` / `↓` | Navigate down |
+| `w` / `Enter` | Switch to selected tab |
 | `1` / `2` / `3` | Toggle LED indicators |
 | `Esc` | Close popup |
 | Click item / `×` | Switch / close tab |
