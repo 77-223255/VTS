@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.4.1 (2026-07-16)
+
+- **Key remap in popup**: swapped `w` (down) and `e` (confirm) — now `e` moves down and `w` confirms selection ([popup.js](./popup.js))
+
 ## v1.4.0 (2026-07-15)
 
 - **Popup tab switcher**: popup now renders the full tab list (280px, elastic height ≤420px) as a fallback when overlay injection is blocked ([popup.html](./popup.html), [popup.js](./popup.js))

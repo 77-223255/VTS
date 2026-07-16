@@ -1,5 +1,5 @@
 /**
- * popup.js - Tab Switcher Popup v1.4.0
+ * popup.js - Tab Switcher Popup v1.4.1
  * Inline tab list with mouse/keyboard navigation
  */
 
@@ -169,9 +169,9 @@ document.addEventListener('keydown', e => {
   }
 
   const has = tabs[sel];
-  if (e.key === 'ArrowDown' || e.key === 'w') { sel = (sel + 1) % tabs.length; updateSel(); }
+  if (e.key === 'ArrowDown' || e.key === 'e') { sel = (sel + 1) % tabs.length; updateSel(); }
   else if (e.key === 'ArrowUp' || e.key === 'q') { sel = (sel - 1 + tabs.length) % tabs.length; updateSel(); }
-  else if ((e.key === 'Enter' || e.key === 'e') && has) { switchTo(has.id); }
+  else if ((e.key === 'Enter' || e.key === 'w') && has) { switchTo(has.id); }
   else if ((e.key === 'Backspace' || e.key === 'Delete') && has) { closeOne(has.id); }
   else if (e.key === 'Escape') { window.close(); }
   else return;
