@@ -3,6 +3,7 @@
 ## v1.4.1 (2026-07-16)
 
 - **Key remap in popup**: swapped `w` (down) and `e` (confirm) — now `e` moves down and `w` confirms selection ([popup.js](./popup.js))
+- **Docs**: added `Backspace`/`Delete` close-tab shortcut to popup section in README (feature already existed since v1.4.0)
 
 ## v1.4.0 (2026-07-15)
 

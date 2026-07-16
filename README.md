@@ -53,6 +53,7 @@
 | `q` / `↑` | Navigate up |
 | `e` / `↓` | Navigate down |
 | `w` / `Enter` | Switch to selected tab |
+| `Delete` / `Backspace` | Close selected tab |
 | `1` / `2` / `3` | Toggle LED indicators |
 | `Esc` | Close popup |
 | Click item / `×` | Switch / close tab |
